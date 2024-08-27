@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"group3-blogApi/domain"
-
 	"github.com/gin-gonic/gin"
+
+	"assessment1/domain"
 )
 
 func (uc *UserController) GetMyProfile(c *gin.Context) {
@@ -16,8 +16,7 @@ func (uc *UserController) GetMyProfile(c *gin.Context) {
 	c.JSON(200, user)
 }
 
-
-func(uc* UserController) GetUsers(c *gin.Context){
+func (uc *UserController) GetUsers(c *gin.Context) {
 	Role := c.GetString("role")
 	if Role != "admin" {
 		c.JSON(401, gin.H{"error": "Unauthorized"})
@@ -32,7 +31,7 @@ func(uc* UserController) GetUsers(c *gin.Context){
 	c.JSON(200, users)
 }
 
-func(uc* UserController) GetUser(c *gin.Context){
+func (uc *UserController) GetUser(c *gin.Context) {
 	var user domain.User
 	Role := c.GetString("role")
 	userID := c.Param("id")
@@ -44,16 +43,15 @@ func(uc* UserController) GetUser(c *gin.Context){
 
 	checkUserID := user.ID.Hex()
 
-	if Role != "admin"  || userID != checkUserID {
+	if Role != "admin" || userID != checkUserID {
 		c.JSON(401, gin.H{"error": "Unauthorized"})
 		return
 	}
-	
+
 	c.JSON(200, user)
 }
 
-
-func(uc* UserController) DeleteUser(c *gin.Context){
+func (uc *UserController) DeleteUser(c *gin.Context) {
 	var user domain.User
 	Role := c.GetString("role")
 	userID := c.Param("id")
@@ -65,11 +63,11 @@ func(uc* UserController) DeleteUser(c *gin.Context){
 
 	checkUserID := user.ID.Hex()
 
-	if Role != "admin"  || userID != checkUserID {
+	if Role != "admin" || userID != checkUserID {
 		c.JSON(401, gin.H{"error": "Unauthorized"})
 		return
 	}
-	
+
 	deletedUser, err := uc.UserUsecase.DeleteUser(userID)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
@@ -78,11 +76,10 @@ func(uc* UserController) DeleteUser(c *gin.Context){
 	c.JSON(200, gin.H{"message": "User deleted successfully", "user": deletedUser})
 }
 
-
-func(uc* UserController) UpdateUserRole(c *gin.Context){
+func (uc *UserController) UpdateUserRole(c *gin.Context) {
 	Role := c.GetString("role")
 	userID := c.Param("id")
-	if Role != "admin" {	
+	if Role != "admin" {
 		c.JSON(401, gin.H{"error": "Unauthorized"})
 		return
 	}
@@ -95,7 +92,6 @@ func(uc* UserController) UpdateUserRole(c *gin.Context){
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-		
 
 	updatedUser, err := uc.UserUsecase.UpdateUserRole(userID, role.Role)
 	if err != nil {
@@ -106,8 +102,7 @@ func(uc* UserController) UpdateUserRole(c *gin.Context){
 	c.JSON(200, gin.H{"message": "User role updated successfully", "user": updatedUser})
 }
 
-
-func(uc* UserController) DeleteMyAccount(c *gin.Context){
+func (uc *UserController) DeleteMyAccount(c *gin.Context) {
 	userID := c.GetString("user_id")
 
 	user, err := uc.UserUsecase.GetMyProfile(userID)
@@ -121,7 +116,6 @@ func(uc* UserController) DeleteMyAccount(c *gin.Context){
 		return
 	}
 
-
 	err = uc.UserUsecase.DeleteMyAccount(userID)
 
 	if err != nil {
@@ -131,13 +125,11 @@ func(uc* UserController) DeleteMyAccount(c *gin.Context){
 	c.JSON(200, gin.H{"message": "Account deleted successfully"})
 }
 
-
 func (uc *UserController) UploadImage(c *gin.Context) {
 	var Image struct {
 		Image string `json:"image" binding:"required"`
 	}
 
-	
 	userID := c.GetString("user_id")
 
 	user, err := uc.UserUsecase.GetMyProfile(userID)
@@ -154,7 +146,6 @@ func (uc *UserController) UploadImage(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
 
 	err = uc.UserUsecase.UploadImage(userID, Image.Image)
 	if err != nil {

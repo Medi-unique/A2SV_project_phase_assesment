@@ -2,7 +2,8 @@ package usecase
 
 import (
 	"errors"
-	"group3-blogApi/domain"
+
+	"assessment1/domain"
 )
 
 func (uc *UserUsecase) GetMyProfile(userID string) (domain.User, error) {
@@ -12,7 +13,6 @@ func (uc *UserUsecase) GetMyProfile(userID string) (domain.User, error) {
 	}
 	return user, nil
 }
-
 
 func (uc *UserUsecase) GetUsers() ([]domain.User, error) {
 	users, err := uc.UserRepo.GetUsers()
@@ -38,7 +38,7 @@ func (uc *UserUsecase) UpdateUserRole(userID, role string) (domain.User, error) 
 	return user, nil
 }
 
-func (uc *UserUsecase)DeleteMyAccount(userID string) error{
+func (uc *UserUsecase) DeleteMyAccount(userID string) error {
 	err := uc.UserRepo.DeleteMyAccount(userID)
 	if err != nil {
 		return err
@@ -46,7 +46,7 @@ func (uc *UserUsecase)DeleteMyAccount(userID string) error{
 	return nil
 }
 
-func (uc *UserUsecase)UploadImage (userID string, imagePath string) error{
+func (uc *UserUsecase) UploadImage(userID string, imagePath string) error {
 	err := uc.UserRepo.UploadImage(userID, imagePath)
 	if err != nil {
 		return err
@@ -54,11 +54,11 @@ func (uc *UserUsecase)UploadImage (userID string, imagePath string) error{
 	return nil
 }
 
-func (uc *UserUsecase)UpdateMyProfile(user domain.User, UserID string) error{
+func (uc *UserUsecase) UpdateMyProfile(user domain.User, UserID string) error {
 	if user.Bio == "" || user.Username == "" {
 		return errors.New("Bio and Username are required")
 	}
-	
+
 	err := uc.UserRepo.UpdateMyProfile(user, UserID)
 	if err != nil {
 		return err

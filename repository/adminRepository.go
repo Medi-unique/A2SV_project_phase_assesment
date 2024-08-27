@@ -3,10 +3,11 @@ package repository
 import (
 	"context"
 	"fmt"
-	"group3-blogApi/domain"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+
+	"assessment1/domain"
 )
 
 func (ur *UserRepositoryImpl) GetMyProfile(userID string) (domain.User, error) {
@@ -20,9 +21,8 @@ func (ur *UserRepositoryImpl) GetMyProfile(userID string) (domain.User, error) {
 	if err != nil {
 		return domain.User{}, err
 	}
-	return user, nil	
+	return user, nil
 }
-
 
 func (ur *UserRepositoryImpl) GetUsers() ([]domain.User, error) {
 	var users []domain.User
@@ -40,8 +40,7 @@ func (ur *UserRepositoryImpl) GetUsers() ([]domain.User, error) {
 	return users, nil
 }
 
-
-func (ur *UserRepositoryImpl) DeleteUser(userID string) (domain.User, error){
+func (ur *UserRepositoryImpl) DeleteUser(userID string) (domain.User, error) {
 	var user domain.User
 	objectID, err := primitive.ObjectIDFromHex(userID)
 	if err != nil {
@@ -69,7 +68,7 @@ func (ur *UserRepositoryImpl) UpdateUserRole(userID, role string) (domain.User, 
 	return user, nil
 }
 
-func(ur *UserRepositoryImpl) DeleteMyAccount(userID string) error{
+func (ur *UserRepositoryImpl) DeleteMyAccount(userID string) error {
 	objectID, err := primitive.ObjectIDFromHex(userID)
 	if err != nil {
 		return fmt.Errorf("invalid user id")
@@ -82,7 +81,7 @@ func(ur *UserRepositoryImpl) DeleteMyAccount(userID string) error{
 	return nil
 }
 
-func(ur *UserRepositoryImpl) UploadImage(userID string, imagePath string) error{
+func (ur *UserRepositoryImpl) UploadImage(userID string, imagePath string) error {
 	objectID, err := primitive.ObjectIDFromHex(userID)
 	if err != nil {
 		return fmt.Errorf("invalid user id")
@@ -95,7 +94,7 @@ func(ur *UserRepositoryImpl) UploadImage(userID string, imagePath string) error{
 	return nil
 }
 
-func(ur *UserRepositoryImpl) UpdateMyProfile(user domain.User, UserID string) error{
+func (ur *UserRepositoryImpl) UpdateMyProfile(user domain.User, UserID string) error {
 	objectID, err := primitive.ObjectIDFromHex(UserID)
 	if err != nil {
 		return fmt.Errorf("invalid user id")

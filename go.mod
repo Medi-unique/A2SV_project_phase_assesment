@@ -1,4 +1,4 @@
-module group3-blogApi
+module assessment1
 
 go 1.22.5
 

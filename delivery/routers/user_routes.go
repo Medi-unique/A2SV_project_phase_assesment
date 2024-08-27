@@ -3,12 +3,11 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 
-	"group3-blogApi/config/db"
-	"group3-blogApi/delivery/controllers"
-	"group3-blogApi/infrastracture"
-	"group3-blogApi/repository"
-	"group3-blogApi/usecase"
-
+	"assessment1/config/db"
+	"assessment1/delivery/controllers"
+	"assessment1/infrastracture"
+	"assessment1/repository"
+	"assessment1/usecase"
 )
 
 func SetUpUser(router *gin.Engine) {
@@ -16,7 +15,9 @@ func SetUpUser(router *gin.Engine) {
 	userRepo := repository.NewUserRepositoryImpl(db.UserCollection)
 	userUsecase := usecase.NewUserUsecase(userRepo)
 	authController := controllers.NewUserController(userUsecase)
-
+	loanRepo := repository.NewLoanRepositoryImpl(db.LoanCollection)
+	loanUsecase := usecase.NewLoanUsecase(loanRepo)
+	loanController := controllers.NewLoanController(loanUsecase)
 	user := router.Group("/user")
 	user.Use(infrastracture.AuthMiddleware())
 
@@ -32,6 +33,8 @@ func SetUpUser(router *gin.Engine) {
 
 		user.POST("/logout", authController.Logout)
 		user.GET("logout-all", authController.LogoutAll)
-
+		// Loan Routes
+		user.POST("/loans", loanController.ApplyForLoan)
+		user.GET("/loans/:id", loanController.GetLoanStatus)
 	}
 }

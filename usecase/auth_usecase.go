@@ -3,9 +3,10 @@ package usecase
 import (
 	"errors"
 	"fmt"
-	"group3-blogApi/domain"
-	"group3-blogApi/infrastracture"
 	"time"
+
+	"assessment1/domain"
+	"assessment1/infrastracture"
 )
 
 func (u *UserUsecase) Login(user *domain.User, deviceID string) (domain.LogInResponse, error) {
@@ -124,7 +125,7 @@ func (au *UserUsecase) RefreshToken(userID, deviceID, token string) (domain.LogI
 					break
 				}
 			}
-			
+
 			if tokenErr != nil {
 
 				return domain.LogInResponse{}, errors.New("invalid token")
@@ -214,9 +215,6 @@ func (au *UserUsecase) AccountActivation(token string, email string) error {
 	return au.UserRepo.AccountActivation(token, email)
 }
 
-
-
-
 // reset password
 
 func (uc *UserUsecase) SendPasswordResetLink(email string) error {
@@ -240,7 +238,7 @@ func (uc *UserUsecase) SendPasswordResetLink(email string) error {
 	}
 
 	// Send the email with the reset link (implement your email logic)
-	
+
 	infrastracture.SendResetLink(user.Email, resetToken)
 
 	return nil
@@ -258,7 +256,7 @@ func (uc *UserUsecase) ResetPassword(token, newPassword string) error {
 
 	// Update the user's password
 	fmt.Println("newPassword////////////", newPassword)
-	hashedPassword, err  := infrastracture.HashPassword(newPassword)
+	hashedPassword, err := infrastracture.HashPassword(newPassword)
 	user.Password = hashedPassword
 	if err != nil {
 		return errors.New("could not hash password")

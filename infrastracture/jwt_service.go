@@ -1,17 +1,18 @@
 package infrastracture
 
 import (
-	"group3-blogApi/config"
-	"group3-blogApi/domain"
+	"log"
 	"time"
-	"github.com/golang-jwt/jwt"
-)
 
+	"github.com/golang-jwt/jwt"
+
+	"assessment1/config"
+	"assessment1/domain"
+)
 
 func GenerateToken(user domain.User) (string, error) {
 	var acessTokenSecret = []byte(config.EnvConfigs.JwtSecret)
 	var AccessTokenExpiryHour = config.EnvConfigs.AccessTokenExpiryHour
-
 
 	claims := domain.JwtCustomClaims{
 		Authorized: true,
@@ -31,9 +32,11 @@ func GenerateToken(user domain.User) (string, error) {
 	return t, err
 }
 
-
 func RefreshToken(token string) (string, error) {
 	var secret = []byte(config.EnvConfigs.JwtRefreshSecret)
+	log.Printf("JWT_SECRET: %s", config.EnvConfigs.JwtSecret)
+	log.Printf("JWT_REFRESH_SECRET: %s", config.EnvConfigs.JwtRefreshSecret)
+
 	t, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
 		return secret, nil
 	})

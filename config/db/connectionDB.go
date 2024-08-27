@@ -7,11 +7,13 @@ import (
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+
 )
 
 var Client *mongo.Client
 var BlogCollection *mongo.Collection
 var UserCollection *mongo.Collection
+var LoanCollection *mongo.Collection
 
 func ConnectDB(connectionString string) {
 
@@ -34,4 +36,5 @@ func ConnectDB(connectionString string) {
 	Client = client
 	BlogCollection = client.Database("loan_tracker").Collection("loans")
 	UserCollection = client.Database("loan_tracker").Collection("users")
+	LoanCollection = client.Database("loan_tracker").Collection("loans")
 }

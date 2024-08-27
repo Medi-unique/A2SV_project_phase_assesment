@@ -1,6 +1,6 @@
 package usecase
 
-import "group3-blogApi/domain"
+import "assessment1/domain"
 
 type UserUsecase struct {
 	UserRepo domain.UserRepository

@@ -1,11 +1,13 @@
 package controllers
 
 import (
-	"group3-blogApi/domain"
-	"group3-blogApi/infrastracture"
+	"assessment1/domain"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+
+	"assessment1/infrastracture"
+
 )
 
 type UserController struct {

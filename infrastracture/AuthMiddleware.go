@@ -8,7 +8,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 
-	"group3-blogApi/config"
+	"assessment1/config"
 )
 
 // var jwtSecret = []byte(os.Getenv("JWT_SECRET"))

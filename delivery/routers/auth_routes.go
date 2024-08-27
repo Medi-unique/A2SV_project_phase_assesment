@@ -3,10 +3,10 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 
-	"group3-blogApi/config/db"
-	"group3-blogApi/delivery/controllers"
-	"group3-blogApi/repository"
-	"group3-blogApi/usecase"
+	"assessment1/config/db"
+	"assessment1/delivery/controllers"
+	"assessment1/repository"
+	"assessment1/usecase"
 )
 
 func SetUpAuth(router *gin.Engine) {

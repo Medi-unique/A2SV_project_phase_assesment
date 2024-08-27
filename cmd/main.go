@@ -1,16 +1,16 @@
 package main
 
 import (
-	"group3-blogApi/config"
-	"group3-blogApi/config/db"
-	"group3-blogApi/delivery/routers"
+	"assessment1/config"
+	"assessment1/config/db"
+	"assessment1/delivery/routers"
 )
 
 func main() {
-    config.InitiEnvConfigs() 
-    db.ConnectDB(config.EnvConfigs.MongoURI)
-      
-    router := routers.SetupRouter()
+	config.InitiEnvConfigs()
+	db.ConnectDB(config.EnvConfigs.MongoURI)
 
-    router.Run(config.EnvConfigs.LocalServerPort)
+	router := routers.SetupRouter()
+
+	router.Run(config.EnvConfigs.LocalServerPort)
 }
